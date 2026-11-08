@@ -40,7 +40,7 @@ Phase 5  成果物レビュー                deliverable-reviewer ⇄ 修正ル
 | フック | `.claude/settings.json` | `.codex/hooks.json`（`PreToolUse` でパッチ・書き込みを検査して拒否、`Stop`・`SubagentStop` で Verdict ブロック検査） |
 | MCP | `.mcp.json` | `.codex/config.toml` の `[mcp_servers.<名前>]` |
 | 起動 | `claude` | `codex`（または IDE 拡張） |
-| plugin 配布・ライト版スキル | あり | なし（ZIP / コピー配布のみ） |
+| plugin 配布 | あり | なし（ZIP / コピー配布のみ） |
 
 **モデルの使い分け**（Codex は OpenAI のモデルだけを使う。Claude のモデルは使えない）：
 
@@ -58,6 +58,28 @@ Phase 5  成果物レビュー                deliverable-reviewer ⇄ 修正ル
 1. Codex でこのフォルダ（案件のフォルダ）を **信頼する（trust）**。信頼しないと、プロジェクトの `.codex/`（エージェント・フック・MCP）が読み込まれない
 2. Codex で `/hooks` を開き、2 つのフックを確認して信頼する（フックは内容のハッシュごとに承認が要る。更新したら再承認）
 3. フックは bash と git で動く。Windows では WSL で使う
+
+## ライト版（スキル 1 ファイルだけ）
+
+エージェント・hooks・Office 生成なしで、**RFP 分析表と要件定義書を Markdown で作る**だけの単体スキルを `skillfile/` に置いている。Codex のスキルフォルダにフォルダごとコピーすれば動く（`SKILL.md` は Claude Code 版・Cursor 版・Codex 版で共通）。
+
+```bash
+# 自分のリポジトリに入れる（ユーザー全体で使うなら ~/.agents/skills/ に置く）
+mkdir -p .agents/skills
+cp -r <このリポジトリ>/skillfile/rfp-requirements .agents/skills/
+
+# RFP を置いて頼む
+codex      # 「$rfp-requirements」で明示もできる
+> docs/rfp.pdf の RFP から要件定義書を作って
+```
+
+| | ライト版（`skillfile/rfp-requirements/`） | フルハーネス（本リポジトリの `.agents/`・`.codex/`） |
+|---|---|---|
+| 構成 | `SKILL.md` 1 ファイル | 6 サブエージェント + 4 Skill + hooks + スクリプト |
+| 入力 | RFP（必須） | 構想を話すだけ（RFP があればそれでも可） |
+| 出力 | `docs/requirements/rfp-analysis.md`・`requirements.md`（Markdown） | `docs/` 一式 ＋ Word・Excel・PowerPoint |
+| レビュー | セルフレビュー（検索 ＋ チェックリスト） | 独立したレビュー役が修正ループを回す（最大 5 回） |
+| 前提 | Codex と python3（Office 原本の読込。PDF を直接読めない環境では pdftotext か PyMuPDF） | bash・Python 3.10+ |
 
 ## Office 納品物
 
@@ -146,6 +168,7 @@ bash .agents/skills/office-deliverables/scripts/build.sh extract    # RFP 原本
 │   │   ├── rfp-authoring/              # 構想 → RFP（非エンジニア向けの聞き取り・推奨値・RFP テンプレート）
 │   │   ├── requirements-toolkit/       # 要件定義の方法論（IPA 準拠）・RFP 分析・テンプレート
 │   │   └── office-deliverables/        # Office 生成・検査スクリプト、体裁基準、スライド構成仕様
+├── skillfile/rfp-requirements/        # ライト版（単体スキル。SKILL.md 1 ファイル、3 環境共通）
 ├── templates/kit/START_HERE.md         # 配布 ZIP に入れる利用者向けの「はじめに」
 ├── templates/project-init/             # 案件の初期化（setup.sh・AGENTS.md・PROJECT_LEARNINGS.md・.framework-version・config.toml.example）
 ├── scripts/

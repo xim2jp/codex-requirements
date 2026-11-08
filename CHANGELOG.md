@@ -7,6 +7,9 @@
 
 ## [Unreleased]
 
+### Added
+- ライト版スキル（`skillfile/rfp-requirements/`）を戻した。`SKILL.md` は 3 環境共通で、PDF を直接読めない環境向けに pdftotext / PyMuPDF で頁ごとにテキスト化する手順を足した
+
 ## [2.0.1-codex.1] - 2026-11-08
 
 Claude Code 版 v2.0.1（＋役割ごとのモデル使い分け）を OpenAI Codex で動くように移植した最初の版。方法論・テンプレート・Office 生成スクリプトは同じ。
@@ -24,7 +27,7 @@ Claude Code 版 v2.0.1（＋役割ごとのモデル使い分け）を OpenAI Co
 - README・START_HERE・ハーネス執筆ガイド・互換性契約を Codex 向けに書き換えた
 
 ### Removed
-- plugin 配布（`.claude-plugin/`）とライト版スキル（`skillfile/`）。Codex 版はコピー配布と ZIP キットのみ
+- plugin 配布（`.claude-plugin/`）。Codex 版はコピー配布と ZIP キットのみ
 
 ## [2.0.1] - 2026-11-08
 
