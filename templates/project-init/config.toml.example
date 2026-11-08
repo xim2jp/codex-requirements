@@ -1,0 +1,12 @@
+# 案件で使う MCP サーバーの雛形（Codex）。使うものだけ .codex/config.toml にコピーする。
+# トークンは環境変数で渡し（env_vars / bearer_token_env_var）、値をコミットしない。
+# RFP・参考資料がクラウドストレージにある場合だけ、そのサービスの公式 MCP を足す。常時接続は増やさない。
+# プロジェクトの .codex/config.toml は、Codex でこのフォルダを「信頼する」と読み込まれる。
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp@latest"]
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp@latest", "--headless"]

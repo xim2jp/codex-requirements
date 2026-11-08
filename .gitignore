@@ -1,0 +1,8 @@
+misc/
+.venv/
+__pycache__/
+tmp/
+dist/
+
+# 有料版の試作（公開しない）
+saas/
