@@ -10,6 +10,9 @@
 ### Added
 - ライト版スキル（`skillfile/rfp-requirements/`）を戻した。`SKILL.md` は 3 環境共通で、PDF を直接読めない環境向けに pdftotext / PyMuPDF で頁ごとにテキスト化する手順を足した
 
+### Changed
+- ライト版スキル（`skillfile/rfp-requirements/SKILL.md`）の 2 ファイル（`rfp-analysis.md`・`requirements.md`）の形式を固定した。冒頭に文書情報（YAML front matter。`format: rfp-requirements-lite`・`format_version: 1`、案件名・発注者・作成者・版・作成日・文書番号・機密区分）を書き、章の見出しと番号、ID 台帳の列名、ID 体系をテンプレートどおりに保つ。フル版にアップロードして納品物に仕上げられるようにするため。セルフレビューに形式の検査（文書情報・見出し・未定義 ID・本文の作業痕跡）を追加し、RFP-NNN の行き先漏れ検査が §5 の表を誤検知しないようにした。OQ に「先送り基準」、UC に「業務領域」の列を足し、rfp-analysis.md §5 の前提に AS-NN を振る
+
 ## [2.0.1-codex.1] - 2026-11-08
 
 Claude Code 版 v2.0.1（＋役割ごとのモデル使い分け）を OpenAI Codex で動くように移植した最初の版。方法論・テンプレート・Office 生成スクリプトは同じ。
