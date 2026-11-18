@@ -849,7 +849,8 @@ def plan(prof: dict, sources: dict[str, list]) -> list[dict]:
         if w.get("appendix_mode", "separate") == "separate":
             apps = [a for a in w.get("appendices", []) if a["source"] in sources]
             for n, a in enumerate(apps, start=1):
-                specs.append({**w, "kind": f"別紙{n}_{a['title']}", "title": f"{w['title']} 別紙{n}",
+                kind = w.get("appendix_numbering", {}).get(a["title"]) or f"別紙{n}_{a['title']}"
+                specs.append({**w, "kind": kind, "title": f"{w['title']} 別紙{n}",
                               "subtitle": a["title"], "main": a["source"], "appendices": [],
                               "front": "light", "intro_from_preamble": True, "_role": "appendix"})
     return specs
